@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Option Generator</title>
+
+  <link rel="stylesheet" href="Dynamic-options.CSS">
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="Enter-Option-value">
+      <label for="numOptions">Enter the number of options: </label>
+      <input type="number" id="numOptions" min="1">
+      <button onclick="generateOptions()">Generate Options</button>
+    </div>
+    <div class="Enter-Option-names-container">
+        <div class="Enter-Option-names" id="optionNames"></div>
+    </div>
+    
+    <div class="Final-Selectionbox-with-dynamic-option-values">
+      <select id="finalSelection"></select>
+    </div>
+  </div>
+
+  <script>
+    function generateOptions() {
+      const numOptions = parseInt(document.getElementById('numOptions').value);
+
+      if (isNaN(numOptions) || numOptions < 1) {
+        alert('Please enter a valid number of options.');
+        return;
+      }
+
+      const optionNamesDiv = document.getElementById('optionNames');
+      optionNamesDiv.innerHTML = '';
+
+      const finalSelection = document.getElementById('finalSelection');
+      finalSelection.innerHTML = '';
+
+      for (let i = 0; i < numOptions; i++) {
+        const optionLabel = document.createElement('label');
+        optionLabel.textContent = `Option ${i + 1}: `;
+
+        const optionInput = document.createElement('input');
+        optionInput.type = 'text';
+
+        optionNamesDiv.appendChild(optionLabel);
+        optionNamesDiv.appendChild(optionInput);
+
+        const option = document.createElement('option');
+        option.value = `Option ${i + 1}`;
+        option.textContent = `Option ${i + 1}`;
+        finalSelection.appendChild(option);
+
+        // Update the option value when the input field changes
+        optionInput.addEventListener('input', () => {
+          option.textContent = optionInput.value;
+        });
+      }
+    }
+  </script>
+</body>
+</html>
